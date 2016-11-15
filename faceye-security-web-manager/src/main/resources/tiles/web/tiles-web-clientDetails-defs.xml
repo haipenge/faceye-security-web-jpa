@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!-- 模块:security 业务对像:ClientDetails 管理后台 tiles模板配置 -->
+    <!-- 作者:haipege -->
+    <!-- ClientDetails 管理 首页(列表页) -->
+	<definition name="security.web.clientDetails.manager" extends="default.web.manager">
+	    <put-attribute name="default-center" value="security.web.clientDetails.center"></put-attribute>
+	</definition>
+	<definition name="security.web.clientDetails.center" extends="default.web.center">
+	    <put-attribute name="default-center-right" value="/component/security/clientDetails/clientDetails_center.jsp"></put-attribute>
+	</definition>
+	
+	<!-- ClientDetails 新增,编辑页面 -->
+	<definition name="security.web.clientDetails.update" extends="default.web.manager">
+	    <put-attribute name="default-center" value="security.web.clientDetails.update.center"></put-attribute>
+	</definition>
+	<definition name="security.web.clientDetails.update.center" extends="default.web.center">
+	    <put-attribute name="default-center-right" value="/component/security/clientDetails/clientDetails_update.jsp"></put-attribute>
+	</definition>
+	
+	<!-- @entiyt.name@ 明细页 -->
+	<definition name="security.web.clientDetails.detail" extends="default.web.manager">
+	    <put-attribute name="default-center" value="security.web.clientDetails.detail.center"></put-attribute>
+	</definition>
+	<definition name="security.web.clientDetails.detail.center" extends="default.web.center">
+	    <put-attribute name="default-center-right" value="/component/security/clientDetails/clientDetails_detail.jsp"></put-attribute>
+	</definition>
+	
+	
+	
+</tiles-definitions>

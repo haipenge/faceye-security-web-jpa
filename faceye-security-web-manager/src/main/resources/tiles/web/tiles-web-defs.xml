@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="default.web.manager" template="/component/core/template/web/default_template.jsp">
+	    <put-attribute name="default-header" value="/component/core/template/web/default_header.jsp"></put-attribute>
+	    <put-attribute name="default-center" value="default.web.center"></put-attribute>
+	    <!-- 
+	    <put-attribute name="default-footer" value="/component/core/template/web/default_footer.jsp"></put-attribute>
+	     -->
+	</definition>
+	<definition name="default.web.center" template="/component/core/template/web/default_center_template.jsp">
+	    <put-attribute name="default-center-left" value="/component/core/template/web/default_center_left.jsp"></put-attribute>
+	    <put-attribute name="default-center-right" value="/component/core/template/web/default_center_right.jsp"></put-attribute>
+	</definition>
+	
+	<!-- Public Message -->
+	<definition name="default.web.msg" extends="default.web.manager">
+	   <put-attribute name="default-center" value="default.web.msg.center"></put-attribute>
+	</definition>
+	<definition name="default.web.msg.center" extends="default.web.center">
+	    <put-attribute name="default-center" value="/component/core/msg/default.jsp"></put-attribute>
+	</definition>
+
+	<!-- 默认空白页面 -->
+	<definition name="default.web.blank" template="/component/core/template/web/default_blank_template.jsp">
+	    <put-attribute name="default-center" value="/component/core/template/web/default_blank_center.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="default.web.error" extends="default.web.blank">
+	    <put-attribute name="default-center" value="/component/core/error/default.jsp"></put-attribute>
+	</definition>
+	<!-- About页面 -->
+	<definition name="default.web.about.center" extends="default.web.center">
+	    <put-attribute name="default-center-right" value="/component/core/about/default.jsp"></put-attribute>
+	</definition>
+	<definition name="default.web.about" extends="default.web.manager">
+	    <put-attribute name="default-center" value="default.web.about.center"></put-attribute>
+	</definition>
+</tiles-definitions>
