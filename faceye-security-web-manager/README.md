@@ -10,7 +10,7 @@ faceye-security-web
 
     curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=password&redirect_uri=http://www.baidu.com' "http://localhost:8080/oauth/token?client_id=client&client_secret=secret&grant_type=authorization_code&code=3sJaPw"
 
-    注:code 一次有限，需每次更换code
+    注:code 一次有效，需每次更换code
 
     2.使用密码模式获取access_token,grand_type=password
      http://localhost:8080/oauth/token?client_id=mobile_client&client_secret=secret&grant_type=password&scope=read&username=demo&password=demo
