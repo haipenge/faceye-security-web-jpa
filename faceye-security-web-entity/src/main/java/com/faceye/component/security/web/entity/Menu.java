@@ -65,7 +65,7 @@ public class Menu implements Serializable {
 	}
 
 	@OneToOne(optional = false, cascade = CascadeType.REMOVE) 
-	@JoinColumn(name = "resource_id", referencedColumnName = "id",unique = true)
+	@JoinColumn(name = "resource_id", referencedColumnName = "id",unique = true,nullable=true,insertable=true)
 	private Resource resource = null;
 
 	public Resource getResource() {

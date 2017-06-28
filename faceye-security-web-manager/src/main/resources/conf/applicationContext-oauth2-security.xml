@@ -82,7 +82,7 @@
 	</beans:bean>
 
 	<oauth2:authorization-server client-details-service-ref="clientDetailsService" token-services-ref="tokenServices"
-		user-approval-handler-ref="oauthUserApprovalHandler" user-approval-page="oauth_approval" error-page="oauth_error" >
+		user-approval-handler-ref="oauthUserApprovalHandler" user-approval-page="oauth_approval" error-page="oauth_error">
 		<oauth2:authorization-code authorization-code-services-ref="authorizationCodeServices" />
 		<oauth2:implicit />
 		<oauth2:refresh-token />
@@ -102,7 +102,6 @@
 			</beans:list>
 		</beans:constructor-arg>
 	</beans:bean>
-
 
 	<!--unity resource server filter -->
 	 <oauth2:resource-server id="webResourceServer" resource-id="web-resource" token-services-ref="tokenServices" 
