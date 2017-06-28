@@ -59,7 +59,7 @@
 				<li><a href="#"><fmt:message key="security.user.account"></fmt:message></a></li>
 				<li><a href="<c:url value="/security/user/profile/${pageContext.request.userPrincipal.name}"/>"><fmt:message key="security.user.profile"></fmt:message></a></li>
 				<li class="divider"></li>
-				<li><a href="<c:url value="/j_spring_security_logout"/>"><fmt:message key="security.user.logout"></fmt:message></a></li>
+				<li><a href="<c:url value="/security/web/j_spring_security_logout"/>"><fmt:message key="security.user.logout"></fmt:message></a></li>
 			</ul></li>
 	</ul>
 	<!-- 

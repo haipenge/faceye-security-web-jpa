@@ -3,12 +3,12 @@ faceye-security-web
           
     1.grant_type = authorization_code 模式
     1).生成授权码：
-     http://localhost:8080/oauth/authorize?client_id=web_client&response_type=code&redirect_uri=http://www.baidu.com
+     http://localhost:8080/oauth/authorize?client_id=web_client&response_type=code&scope=web&redirect_uri=http://www.baidu.com
 
     2).使用授权码换取access token
-     http://localhost:8080/oauth/token?client_id=web_client&client_secret=secret&grant_type=authorization_code&code=3sJaPw&redirect_uri=http://www.baidu.com
+     http://localhost:8080/oauth/token?client_id=web_client&client_secret=secret&grant_type=authorization_code&redirect_uri=http://www.baidu.com&code=3pc6GD
 
-    curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=password&redirect_uri=http://www.baidu.com' "http://localhost:8080/oauth/token?client_id=client&client_secret=secret&grant_type=authorization_code&code=3sJaPw"
+    curl -X POST -H "Cache-Control: no-cache" -H "Content-Type: application/x-www-form-urlencoded" -d 'grant_type=password&redirect_uri=http://www.baidu.com' "http://localhost:8080/oauth/token?client_id=web_client&client_secret=secret&grant_type=authorization_code&code=3sJaPw"
 
     注:code 一次有效，需每次更换code
 
