@@ -1,5 +1,6 @@
 package com.faceye.component.security.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,11 +19,11 @@ import com.faceye.component.security.web.repository.jpa.ResourceRepository;
 import com.faceye.component.security.web.service.ResourceService;
 import com.faceye.component.security.web.service.RoleService;
 import com.faceye.feature.service.impl.BaseServiceImpl;
-import com.faceye.feature.util.ServiceException;
+import com.faceye.feature.util.regexp.RegexpUtil;
 
 @Service("webResourceService")
 public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, ResourceRepository>
-		implements ResourceService {
+		implements ResourceService, FilterInvocationSecurityMetadataSource {
 	private PathMatcher pathMatcher = new AntPathMatcher();
 	@Autowired
 	private RoleService roleService = null;
@@ -47,19 +48,57 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		String url = ((FilterInvocation) object).getRequestUrl();
 		logger.debug(">>FaceYe -->Security-->,filter url is:" + url);
-		List<Resource> resources = this.dao.findAll();
-		if (CollectionUtils.isNotEmpty(resources)) {
-			for (Resource r : resources) {
-				String _url = r.getUrl();
-				if (StringUtils.isNotEmpty(_url) && !_url.endsWith("\\*")) {
-					_url += "**";
-					if (pathMatcher.match(_url, url)) {
-						return r.getAttributes();
+		boolean isIgnore = this.isUrlIgnore(url);
+		if (!isIgnore) {
+			List<Resource> resources = this.dao.findAll();
+			if (CollectionUtils.isNotEmpty(resources)) {
+				for (Resource r : resources) {
+					String _url = r.getUrl();
+					if (StringUtils.isNotEmpty(_url) && !_url.endsWith("\\*")) {
+						_url += "**";
+						if (pathMatcher.match(_url, url)) {
+							return r.getAttributes();
+						}
 					}
 				}
 			}
 		}
 		return null;
+	}
+/**
+ * 被忽略的文件 
+ * @param url
+ * @return
+ */
+	private boolean isUrlIgnore(String url) {
+		boolean res = false;
+		String[] ignoreUrls = this.ignoringUrls();
+		AntPathMatcher antMatcher = new AntPathMatcher();
+		for (String regexp : ignoreUrls) {
+			res = antMatcher.match(regexp, url);
+			if (res) {
+				break;
+			}
+		}
+		return res;
+	}
+
+	private String[] ignoringUrls() {
+		String[] ignoringUrls = null;
+		List<String> items = new ArrayList<String>();
+		items.add("/static/**");
+		items.add("/public/**");
+		items.add("/images/**");
+		items.add("/js/**");
+		items.add("/css/**");
+		items.add("*.js");
+		items.add("*.css");
+		items.add("*.jpg");
+		items.add("*.png");
+		items.add("*.gif");
+		items.add("favor\\.ico");
+		ignoringUrls = items.toArray(new String[items.size()]);
+		return ignoringUrls;
 	}
 
 	@Override
