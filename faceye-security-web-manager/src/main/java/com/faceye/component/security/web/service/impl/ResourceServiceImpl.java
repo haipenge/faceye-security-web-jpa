@@ -27,10 +27,19 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 	private PathMatcher pathMatcher = new AntPathMatcher();
 	@Autowired
 	private RoleService roleService = null;
+	// 权限判断URL集合
+	private List<Resource> resources = null;
+	// 上一次刷新resourcs集合的时间
+	private static Long LAST_REFRESH_RESOURCE_TIMESTAMP = 0L;
+	// 缓存有效时间,5分趾
+	private static Long CACHE_RESOURCE_EXPIRE_TIME_SECONDS = 5 * 60 * 1000L;
 
 	@Autowired
 	public ResourceServiceImpl(ResourceRepository dao) {
 		super(dao);
+		if (CollectionUtils.isEmpty(resources)) {
+			resources = dao.findAll();
+		}
 	}
 
 	@Override
@@ -50,7 +59,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 		logger.debug(">>FaceYe -->Security-->,filter url is:" + url);
 		boolean isIgnore = this.isUrlIgnore(url);
 		if (!isIgnore) {
-			List<Resource> resources = this.dao.findAll();
+			this.refreshCacheResources();
 			if (CollectionUtils.isNotEmpty(resources)) {
 				for (Resource r : resources) {
 					String _url = r.getUrl();
@@ -62,20 +71,23 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 					}
 				}
 			}
+		} else {
+			logger.debug(">>FaceYe security ignore url :" + url);
 		}
 		return null;
 	}
-/**
- * 被忽略的文件 
- * @param url
- * @return
- */
+
+	/**
+	 * 是否忽略的URL权限限制
+	 * 
+	 * @param url
+	 * @return
+	 */
 	private boolean isUrlIgnore(String url) {
 		boolean res = false;
 		String[] ignoreUrls = this.ignoringUrls();
-		AntPathMatcher antMatcher = new AntPathMatcher();
 		for (String regexp : ignoreUrls) {
-			res = antMatcher.match(regexp, url);
+			res = pathMatcher.match(regexp, url);
 			if (res) {
 				break;
 			}
@@ -83,6 +95,11 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 		return res;
 	}
 
+	/**
+	 * 被忽略权限的URL
+	 * 
+	 * @return
+	 */
 	private String[] ignoringUrls() {
 		String[] ignoringUrls = null;
 		List<String> items = new ArrayList<String>();
@@ -96,7 +113,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 		items.add("*.jpg");
 		items.add("*.png");
 		items.add("*.gif");
-		items.add("favor\\.ico");
+		items.add("favor.ico");
 		ignoringUrls = items.toArray(new String[items.size()]);
 		return ignoringUrls;
 	}
@@ -116,6 +133,26 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 	@Override
 	public Resource getResourceByUrl(String url) {
 		return this.dao.getResourceByUrl(url);
+	}
+
+	/**
+	 * 刷新Resource缓存
+	 */
+	private void refreshCacheResources() {
+		boolean isRefresh = this.isNeedRefreshCacheResources();
+		if (isRefresh) {
+			resources = this.dao.findAll();
+			this.LAST_REFRESH_RESOURCE_TIMESTAMP = System.currentTimeMillis();
+		}
+	}
+
+	private boolean isNeedRefreshCacheResources() {
+		boolean res = false;
+		if (LAST_REFRESH_RESOURCE_TIMESTAMP == 0 || System.currentTimeMillis()
+				- this.LAST_REFRESH_RESOURCE_TIMESTAMP > this.CACHE_RESOURCE_EXPIRE_TIME_SECONDS) {
+			res = true;
+		}
+		return res;
 	}
 
 }/** @generate-service-source@ **/
