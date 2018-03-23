@@ -22,7 +22,7 @@ import com.faceye.component.security.web.service.ResourceService;
 import com.faceye.component.security.web.service.RoleService;
 import com.faceye.component.security.web.service.SecurityInitService;
 import com.faceye.component.security.web.service.UserService;
-import com.faceye.component.security.web.util.PasswordEncoder;
+import com.faceye.component.security.web.util.PasswordEncoderUtil;
 
 
 
@@ -98,7 +98,7 @@ public class SecurityInitServiceImpl implements SecurityInitService {
 			searchParams.put("EQ|username", username);
 			Page<User> users = this.userService.getPage(searchParams, 1, 5);
 			if (users == null || CollectionUtils.isEmpty(users.getContent())) {
-				String encodingPassword = PasswordEncoder.encoder("admin","admin");
+				String encodingPassword = PasswordEncoderUtil.encoder("admin");
 				Set<Role> roles = new HashSet<Role>(0);
 				User user = new User();
 				user.setUsername("admin");

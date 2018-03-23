@@ -29,7 +29,7 @@ import org.springframework.security.access.SecurityConfig;
 *  Create Date:2014年5月21日
  */
 @Entity(name="web_resource")
-@Table(name="security_web_resource")
+@Table(name="web_security_resource")
 public class Resource implements Serializable {
 
 	/**
@@ -90,7 +90,7 @@ public class Resource implements Serializable {
     * @author haipenge
     */
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER,targetEntity=Role.class)
-	@JoinTable(name = "security_web_role_resource", joinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") })
+	@JoinTable(name = "web_security_role_resource", joinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") })
     @Column(name="role_id")
 	private  Set<Role> roles=new HashSet<Role>(0);
 	public Set<Role> getRoles() {
@@ -112,8 +112,9 @@ public class Resource implements Serializable {
 		}
 		return attributes;
 	}
-	
+	//table="web_security_menu"
 	@OneToOne(optional = true, cascade = CascadeType.REMOVE,targetEntity=Menu.class)
+	@JoinColumn(name = "menu_id", referencedColumnName = "id",unique = true,nullable=true)
 	private Menu menu=null;
 	public Menu getMenu() {
 		return menu;

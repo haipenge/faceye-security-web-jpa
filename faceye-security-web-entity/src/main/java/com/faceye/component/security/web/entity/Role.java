@@ -24,7 +24,7 @@ import javax.persistence.Table;
 *  Create Date:2014年5月21日
  */
 @Entity(name="web_role")
-@Table(name = "security_web_role")
+@Table(name = "web_security_role")
 public class Role implements Serializable {
 
 	/**
@@ -69,7 +69,7 @@ public class Role implements Serializable {
 	 * @author haipenge
 	 */
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY,targetEntity=User.class)
-	@JoinTable(name = "security_web_user_role", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") })
+	@JoinTable(name = "web_security_user_role", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") })
 	private Set<User> users = new HashSet<User>(0);
 
 	public Set<User> getUsers() {
@@ -81,7 +81,7 @@ public class Role implements Serializable {
 	}
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER,targetEntity=Resource.class)
-	@JoinTable(name = "security_web_role_resource", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "id") })
+	@JoinTable(name = "web_security_role_resource", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id", referencedColumnName = "id") })
 	private Set<Resource> resources = new HashSet<Resource>(0);
 
 	public Set<Resource> getResources() {
@@ -97,7 +97,7 @@ public class Role implements Serializable {
 	
 	}
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER,targetEntity=Menu.class)
-	@JoinTable(name = "security_web_menu_role", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "menu_id", referencedColumnName = "id") })
+	@JoinTable(name = "web_security_menu_role", joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "menu_id", referencedColumnName = "id") })
 	private Set<Menu> menus=new HashSet<Menu>(0);
 
 	public Set<Menu> getMenus() {

@@ -27,7 +27,7 @@ import javax.persistence.Table;
 *  Create Date:2014年5月21日
  */
 @Entity(name="web_menu")
-@Table(name = "security_web_menu")
+@Table(name = "web_security_menu")
 public class Menu implements Serializable {
 
 	/**
@@ -63,7 +63,7 @@ public class Menu implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+//table="web_security_resource"
 	@OneToOne(optional = false, cascade = CascadeType.REMOVE) 
 	@JoinColumn(name = "resource_id", referencedColumnName = "id",unique = true,nullable=true,insertable=true)
 	private Resource resource = null;
@@ -95,7 +95,7 @@ public class Menu implements Serializable {
 	}
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER,targetEntity=Role.class)
-	@JoinTable(name = "security_web_menu_role", joinColumns = { @JoinColumn(name = "menu_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") })
+	@JoinTable(name = "web_security_menu_role", joinColumns = { @JoinColumn(name = "menu_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles = new HashSet<Role>();
 
 	public Set<Role> getRoles() {

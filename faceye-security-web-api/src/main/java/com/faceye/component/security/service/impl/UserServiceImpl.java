@@ -56,7 +56,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
 		user.getRoles().clear();
 		if(roleIds!=null &&roleIds.length>0){
 			for(Long roleId:roleIds){
-				Role role=this.roleRepository.findOne(roleId);
+				Role role=this.roleRepository.findById(roleId);
 				user.getRoles().add(role);
 			}
 		}
@@ -79,7 +79,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long, UserRepository>
 		if(user==null){
 			user=new User();
 			Set<Role>roles=new HashSet<Role>(0);
-		    Role role=this.roleRepository.findOne(Long.parseLong(registerRoleId));
+		    Role role=this.roleRepository.findById(Long.parseLong(registerRoleId));
 		    roles.add(role);
 		    user.setUsername(StringUtils.lowerCase(username));
 		    user.setEnabled(true);

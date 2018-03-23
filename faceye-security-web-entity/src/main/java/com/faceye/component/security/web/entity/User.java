@@ -31,7 +31,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author @haipenge haipenge@gmail.com Create Date:2014年5月21日
  */
 @Entity(name = "web_user")
-@Table(name = "security_web_user")
+@Table(name = "web_security_user")
 public class User implements UserDetails {
 
 	/**
@@ -204,7 +204,7 @@ public class User implements UserDetails {
 	 * @author haipenge
 	 */
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Role.class)
-	@JoinTable(name = "security_web_user_role", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+	@JoinTable(name = "web_security_user_role", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles = new HashSet<Role>(0);
 

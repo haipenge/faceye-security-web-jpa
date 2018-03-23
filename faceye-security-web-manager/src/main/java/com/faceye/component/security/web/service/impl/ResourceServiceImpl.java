@@ -34,6 +34,8 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 	// 缓存有效时间,5分趾
 	private static Long CACHE_RESOURCE_EXPIRE_TIME_SECONDS = 5 * 60 * 1000L;
 
+	private List<String> ignoreUrls = new ArrayList<String>();
+
 	@Autowired
 	public ResourceServiceImpl(ResourceRepository dao) {
 		super(dao);
@@ -101,21 +103,21 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, Long, Resourc
 	 * @return
 	 */
 	private String[] ignoringUrls() {
-		String[] ignoringUrls = null;
-		List<String> items = new ArrayList<String>();
-		items.add("/static/**");
-		items.add("/public/**");
-		items.add("/images/**");
-		items.add("/js/**");
-		items.add("/css/**");
-		items.add("*.js");
-		items.add("*.css");
-		items.add("*.jpg");
-		items.add("*.png");
-		items.add("*.gif");
-		items.add("favor.ico");
-		ignoringUrls = items.toArray(new String[items.size()]);
-		return ignoringUrls;
+		if (CollectionUtils.isEmpty(ignoreUrls)) {
+			ignoreUrls.add("/static/**");
+			ignoreUrls.add("/public/**");
+			ignoreUrls.add("/images/**");
+			ignoreUrls.add("/js/**");
+			ignoreUrls.add("/css/**");
+			ignoreUrls.add("*.js");
+			ignoreUrls.add("*.css");
+			ignoreUrls.add("*.jpg");
+			ignoreUrls.add("*.png");
+			ignoreUrls.add("*.gif");
+			ignoreUrls.add("favor.ico");
+		}
+		return ignoreUrls.toArray(new String[ignoreUrls.size()]);
+
 	}
 
 	@Override

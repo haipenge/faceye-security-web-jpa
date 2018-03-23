@@ -128,17 +128,20 @@
 	
 
 
-
+<!-- 
 	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder">
 		<beans:property name="encodeHashAsBase64" value="false" />
 	</beans:bean>
 	<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
 		<beans:property name="userPropertyToUse" value="getUsername" />
 	</beans:bean>
+	 -->
 	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="webUserService"></beans:property>
+		<!-- 
 		<beans:property name="passwordEncoder" ref="passwordEncoder"></beans:property>
 		<beans:property name="saltSource" ref="saltSource"></beans:property>
+		 -->
 	</beans:bean>
 
 	<beans:bean id="accessDecisionManager" class="com.faceye.component.security.web.service.impl.SecurityAccessDecisionManager">
@@ -223,9 +226,9 @@
 			<beans:value>foobar</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-
+<!-- 
 	<beans:import resource="classpath*:/conf/applicationContext-oauth2-security.xml" />
-
+ -->
 	<http authentication-manager-ref="authenticationManager" access-decision-manager-ref="accessDecisionManager" entry-point-ref="authenticationEntryPoint"
 		auto-config="false" request-matcher="ant" pattern="/**">
 		<csrf disabled="true" />
