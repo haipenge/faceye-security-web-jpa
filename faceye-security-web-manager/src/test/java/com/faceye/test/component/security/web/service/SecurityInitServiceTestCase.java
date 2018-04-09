@@ -1,9 +1,10 @@
 package com.faceye.test.component.security.web.service;
 
+
 import javax.transaction.Transactional;
 
-import org.eclipse.core.runtime.Assert;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

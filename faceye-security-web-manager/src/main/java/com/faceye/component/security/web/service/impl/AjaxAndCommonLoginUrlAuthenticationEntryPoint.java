@@ -22,7 +22,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.RedirectUrlBuilder;
 import org.springframework.security.web.util.UrlUtils;
-import org.junit.Assert;
+import org.springframework.util.Assert;
 
 import com.faceye.component.security.web.util.AjaxSecurity;
 
@@ -54,7 +54,7 @@ public class AjaxAndCommonLoginUrlAuthenticationEntryPoint implements Authentica
 	// ~ Methods ========================================================================================================
 
 	public void afterPropertiesSet() throws Exception {
-		Assert.assertTrue(StringUtils.isNotEmpty(loginFormUrl) && UrlUtils.isValidRedirectUrl(loginFormUrl),
+		Assert.isTrue(StringUtils.isNotEmpty(loginFormUrl) && UrlUtils.isValidRedirectUrl(loginFormUrl),
 				"loginFormUrl must be specified and must be a valid redirect URL");
 		if (useForward && UrlUtils.isAbsoluteUrl(loginFormUrl)) {
 			throw new IllegalArgumentException("useForward must be false if using an absolute loginFormURL");
@@ -76,7 +76,6 @@ public class AjaxAndCommonLoginUrlAuthenticationEntryPoint implements Authentica
 	 */
 	protected String determineUrlToUseForThisRequest(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) {
-
 		return getLoginFormUrl();
 	}
 
